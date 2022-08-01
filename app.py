@@ -6,17 +6,19 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 import pandas as pd
 
+
+options = webdriver.ChromeOptions() 
+options.add_argument("headless")
+
 class Robo:
     def __init__(self):
-        self.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
-        self.driver.implicitly_wait(10)
+        self.driver = webdriver.Chrome(options=options, service=ChromeService(ChromeDriverManager().install()))
         self.obter_gastos()
         self.driver.quit()
 
     def obter_gastos(self):
         data = []
         while True:
-            
             politico = input('Politíco a ser analisado (digite "s" para sair): ')
             if politico == 's':
                 df = pd.DataFrame.from_dict(d for d in data)
@@ -29,9 +31,11 @@ class Robo:
                 ano = input('Ano a ser analisado [2022, 2021, 2020, 2019]: ')
                 if ano in ['2022', '2021', '2020', '2019']:
                     break
-            
-            self.driver.get("https://www.camara.leg.br/transparencia/gastos-parlamentares?ano="+ano)
+
             print('buscando dados...')
+            self.driver.get("https://www.camara.leg.br/transparencia/gastos-parlamentares?ano="+ano)
+            self.driver.implicitly_wait(10)
+
             search_politico_input = self.driver.find_element(By.XPATH, "/html/body/div[2]/div[1]/main/section[1]/div[1]/div[2]/div/div/div/form/div[1]/div/div[2]/div[2]/div[2]/span[1]/input")
             search_politico_input.click()
             search_politico_input.send_keys(politico)
@@ -48,14 +52,14 @@ class Robo:
             tipo_gasto = self.driver.find_elements(By.XPATH, '//*[@id="conteudo-tabela-comparativa"]/li/article/section/dl/dt/span')
             valor = self.driver.find_elements(By.XPATH, '//*[@id="conteudo-tabela-comparativa"]/li/article/section/dl/dd/span')
 
-            item = self.showData(nome=nome, partido=partido, estado=estado, total=total, tipo_gasto=tipo_gasto, valor=valor)
+            item = self.showData(nome=nome, partido=partido, estado=estado, total=total, tipo_gasto=tipo_gasto, valor=valor, ano=ano)
 
             if item['Nome'] not in (d['Nome'] for d in data):
                 data.append(item)
 
     def showData(self, *args, **kwargs):
         data = {}
-        print(f"\n{kwargs.get('nome')} - {kwargs.get('partido')}/{kwargs.get('estado')}")
+        print(f"\n{kwargs.get('nome')} - {kwargs.get('partido')}/{kwargs.get('estado')} {kwargs.get('ano')}")
         print('-'*75)
         print(f'{"Tipo de gasto":<51}{"Valor Gasto":<15}')
         data['Nome'] = kwargs.get('nome')
@@ -63,12 +67,13 @@ class Robo:
             data[t.text] = v.text
             print(f'{t.text:<50} {v.text:<15}')
         data['Total'] = kwargs.get('total')
+        data['Ano'] = kwargs.get('ano')
         print('-'*75)
         print('Total: ' + kwargs.get('total') + '\n')
         return data
             
             
 if "__main__" == __name__:
-    analizador = Robo()    
+    analisador = Robo()    
     
   
