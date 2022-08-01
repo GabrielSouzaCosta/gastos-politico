@@ -1,5 +1,6 @@
 # gastos-politico
 Aplicativo que busca os gastos de um deputado federal no site https://www.camara.leg.br/transparencia/gastos-parlamentares usando Selenium e retorna um csv com os tipos de gastos os valores e o total gasto no período.
+<br></br>
 Bibliotecas usadas:
 - Selenium (Chrome) para Web Scraping dos dados
 - Pandas para retornar CSV
