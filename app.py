@@ -35,11 +35,11 @@ class Robo:
             search_politico_input = self.driver.find_element(By.XPATH, "/html/body/div[2]/div[1]/main/section[1]/div[1]/div[2]/div/div/div/form/div[1]/div/div[2]/div[2]/div[2]/span[1]/input")
             search_politico_input.click()
             search_politico_input.send_keys(politico)
-            sleep(1)
+            sleep(0.5)
             search_politico_input.send_keys(Keys.ARROW_DOWN + Keys.ENTER + Keys.ENTER)
-            sleep(1)
+            sleep(0.5)
             self.driver.find_element(By.XPATH, '//*[@id="cota"]/div/div[3]/button').click()
-            sleep(0.7)
+            sleep(0.5)
 
             nome = self.driver.find_element(By.XPATH, '//*[@id="conteudo-tabela-comparativa"]/li/article/header/dl/dd[1]').text
             partido = self.driver.find_element(By.XPATH, '//*[@id="conteudo-tabela-comparativa"]/li/article/header/dl/dd[2]').text
