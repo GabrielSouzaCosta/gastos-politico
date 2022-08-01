@@ -4,4 +4,4 @@ Bibliotecas usadas:
 - Selenium (Chrome) para Web Scraping dos dados
 - Pandas para retornar CSV
 
-[Screencast from 01-08-2022 11:29:44.webm](https://user-images.githubusercontent.com/79537042/182172781-4b1dc6e7-41d7-4ca8-9a69-e642937a5ce6.webm)
+![Screenshot from 2022-08-01 11-34-10](https://user-images.githubusercontent.com/79537042/182173880-706643dc-54bc-4558-a0fe-bc6b8b591678.png)
